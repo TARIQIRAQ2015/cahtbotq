@@ -1,6 +1,11 @@
 import streamlit as st
 import openai
 from datetime import datetime
+import os
+from dotenv import load_dotenv
+
+# تحميل متغيرات البيئة
+load_dotenv()
 
 # تهيئة الصفحة
 st.set_page_config(
@@ -10,7 +15,12 @@ st.set_page_config(
 )
 
 # تعيين مفتاح API الخاص بـ OpenAI
-openai.api_key = "YOUR-OPENAI-API-KEY"
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# التحقق من وجود مفتاح API
+if not openai.api_key:
+    st.error("الرجاء تعيين مفتاح OPENAI_API_KEY في ملف .env")
+    st.stop()
 
 # تصميم CSS مخصص
 st.markdown("""
